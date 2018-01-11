@@ -1,0 +1,20 @@
+﻿test 测试代码所在的目录
+editorconfig 编辑器风格统一IDE的编码风格
+eslintrc 支持JSX语法检测
+jshintrc 代码风格检测只支持JS
+yo-rc.json yomen的配置文件
+gruntfile grunt的配置文件
+karma.conf.js karma 框架的配置文件
+LICENSE 协议文件githun生成
+webpack.config.js webpack开发环境配置文件
+webpack.dist.config.js webpack生产环境的配置文件
+
+/***项目初始构建***/
+npm install -g yo
+安装yomen
+npm install -g generator-react-webpack
+安装react模板工具
+yo react-webpack gallery
+生成gallery的react项目
+grun serve
+运行项目
