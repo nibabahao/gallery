@@ -27,3 +27,7 @@ grun serve
 如要做旋转抖动效果
 需要在.img-figure将transform-origin: 0 50% 0;中心设为圆点
 翻转后位移 is-inverse 加上translate(320px)
+
+自定义字体边缘出现像素解决:
+-webkit-font-smoothing: antialiased;开启浏览器的字体平滑
+-moz-font-smoothing: antialiased;

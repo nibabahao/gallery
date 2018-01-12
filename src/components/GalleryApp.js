@@ -29,8 +29,8 @@ var ImgFigure = React.createClass({
 		}
 		// 如果图片的选择角度有值并且不为0， 添加旋转角度
 		if (this.props.arrange.rotate) {
-			['-moz-', '-ms-', '-webkit-', ''].forEach(function(value){
-				styleObj[value + 'transform'] = 'rotate(' + this.props.arrange.rotate + 'deg)';
+			['MozTransform', 'msTransform', 'webkitTransform', 'transform'].forEach(function(value){
+				styleObj[value] = 'rotate(' + this.props.arrange.rotate + 'deg)';
 			}.bind(this));
 		}
 		if (this.props.arrange.isCenter) {
@@ -78,6 +78,33 @@ function get30DegRandom(){
   return ((Math.random() > 0.5 ? '' : '-') + Math.ceil(Math.random() * 30));
 }
 
+var ControllerUnit = React.createClass({
+	handleClick: function(e){
+		//如果点击的是当前正式选中专题的按钮，则翻转图片，否则将对应·的图片居中
+		if (this.props.arrange.isCenter) {
+			this.props.inverse();
+		} else{
+			this.props.center();
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	},
+	render: function(){
+		var controllerUnitsClassName = "controller-unit";
+		//如果对应的居中的图片，显示控制按钮得居中状态
+		if (this.props.arrange.isCenter) {
+			controllerUnitsClassName += " is-center";
+			//如果对应的是翻转图片，显示控制按钮得状态
+			if (this.props.arrange.isInverse) {
+				controllerUnitsClassName += " is-inverse";
+			}
+		}
+		return (
+				<span className={controllerUnitsClassName} onClick={this.handleClick}></span>
+			);
+	}
+});
+
 var GalleryApp = React.createClass({
 	Constant: {
 		centerPos: {
@@ -121,7 +148,7 @@ var GalleryApp = React.createClass({
 			vPosRangeX = vPosRange.x,
 
 			imgsArrangeTopArr = [],
-			topImgNum = Math.ceil(Math.random() * 2), //取一个或者两个
+			topImgNum = Math.floor(Math.random() * 2), //取一个或者两个
 			topImgSpliceIndex = 0,///从上册图片拿出来的图片暂定0
 			//拿到要居中的图片
 			imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);
@@ -132,7 +159,7 @@ var GalleryApp = React.createClass({
 				isCenter: true
 			};
 			//取出要布局上册的图片的状态信息
-			topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum));	//从数组后面取出
+			topImgSpliceIndex = Math.floor(Math.random() * (imgsArrangeArr.length - topImgNum));	//从数组后面取出
 			imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum);
 			//布局位于上册的图片
 			imgsArrangeTopArr.forEach(function(value, index){
@@ -255,7 +282,9 @@ var GalleryApp = React.createClass({
 					isCenter: false
 				};
 			}
-			imgFigures.push(<ImgFigure data={value} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArray[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
+			//每次渲染REACT	会造成重绘每遍历，如果每个组件加入一个key属性的唯一值，会帮助REACT更快找到组件
+			imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArray[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
+			controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArray[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
 		}.bind(this));
 		return	(
 			<section className="stage" ref="stage">
