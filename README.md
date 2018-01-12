@@ -1,5 +1,5 @@
 # gallery
-a photograph gallery based on react\n
+a photograph gallery based on react <br/>
 项目运行
 第一步
 npm install
