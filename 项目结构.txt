@@ -18,3 +18,12 @@ yo react-webpack gallery
 生成gallery的react项目
 grun serve
 运行项目
+
+
+/***在做旋转动画时要注意
+在.img-figure中设置了transform: rotateY(30deg)如不设置父类节点看上去没变化
+.img-figure需要设置transform-style: preserve-3d;开启3d模式
+在父类.img-sec中需要设置-webkit-perspective: 1000px; 数值设置合理
+如要做旋转抖动效果
+需要在.img-figure将transform-origin: 0 50% 0;中心设为圆点
+翻转后位移 is-inverse 加上translate(320px)

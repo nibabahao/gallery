@@ -24,6 +24,7 @@ html, body{
     height: 100%;
     overflow: hidden;
     background-color:#DDD;
+    perspective: 1800px;
     @at-root{
       .img-figure{
         position: absolute;
@@ -33,6 +34,13 @@ html, body{
         padding: 40px;
         background-color: #fff;
         box-sizing: border-box;
+        transform-origin: 0 50% 0; 
+        transform-style: preserve-3d;
+        cursor: pointer;
+        transition: transform .6s ease-in-out, left .6s ease-in-out , top .6s ease-in-out;
+        &.is-inverse {
+          transform: translate(320px) rotateY(180deg);
+        }
       }
       figcaption{
         text-align: center;
@@ -41,6 +49,25 @@ html, body{
           color: #a7a0a2;
           font-size: 16px;
         }
+        .img-back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          padding: 50px 40px;
+          color: #a7a0a2;
+          font-size: 22px;
+          line-height: 1.25;
+          text-align: left;
+          background-color: #fff;
+          box-sizing: border-box;
+          transform: rotateY(180deg) translateZ(1px);
+          backface-visibility: hidden;
+          p {
+            margin: 0;
+          }
+        }        
       }
     }
   }
